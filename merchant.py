@@ -1,14 +1,24 @@
 import streamlit as st
-import numpy as np
-import matplotlib.pyplot as plt
 import pandas as pd
+from PIL import Image
+from datetime import datetime
 from sklearn.preprocessing import StandardScaler, MinMaxScaler
 from sklearn.cluster import KMeans
-import plotly.express as px
+import matplotlib.pyplot as plt
+import plotly.express as px 
+import requests
+import numpy as np
+from io import BytesIO
 
 # Title of the Streamlit app
 st.set_page_config(page_title='FM OFF MERCHANT FINNET', page_icon=':bar_chart:')
 st.title('Customer Segmentation using FM Analysis for FINNET')
+
+# Function to load image from URL and convert to Matplotlib compatible format
+def load_image_from_url(url):
+    response = requests.get(url)
+    img = Image.open(BytesIO(response.content))
+    return np.array(img)
 
 # File uploader
 uploaded_file = st.file_uploader("Choose an Excel file", type="xlsx")
@@ -78,8 +88,8 @@ if uploaded_file is not None:
     
     # Plot scaled clusters with background image
     st.subheader('Clusters with Background Image')
-    background_image_path = r"C:\Users\ASUS\Downloads\tablerfm.png"
-    background_image = plt.imread(background_image_path)
+    background_image_url = "https://github.com/kvinmarco/rfmapp.py/raw/main/rfmtable.png"
+    background_image = load_image_from_url(background_image_url)
 
     fig, ax = plt.subplots(figsize=(10, 6))
     ax.imshow(background_image, extent=[0, 5, 0, 5], aspect='auto', alpha=0.4)
