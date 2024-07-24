@@ -231,8 +231,8 @@ if uploaded_file is not None:
         filtered_df[['Frequency', 'Monetary']] = scaler.fit_transform(filtered_df[['Frequency', 'Monetary']])
         
         # Plot the scaled clusters with a background image
-        background_image_path = r"C:\Users\ASUS\Downloads\tablerfm.png"  # replace with your actual path
-        background_image = plt.imread(background_image_path)
+        background_image_url = "https://github.com/kvinmarco/rfmapp.py/raw/main/rfmtable.png"
+        background_image = load_image_from_url(background_image_url)
         fig, ax = plt.subplots(figsize=(10, 6))
         ax.imshow(background_image, extent=[0, 5, 0, 5], aspect='auto', alpha=0.4)
         scatter = ax.scatter(filtered_df['Frequency'], filtered_df['Monetary'], c=filtered_df['Cluster'], cmap='viridis', s=50)
